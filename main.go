@@ -1,11 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"github.com/jersonmartinez/Web-Scraper-with-Go/handler"
 )
 
 func main() {
-	fmt.Println("Web Scraper")
+	// url := "www.elastic.co/es/downloads/logstash"
+	// crashell := "www.crashell.com"
 
-	links.getHREFS()
+	// handler.Launch(url)
+
+	handler.GetLogstash()
 }

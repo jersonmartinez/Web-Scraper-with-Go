@@ -1,4 +1,4 @@
-package links
+package handler
 
 import (
 	"fmt"
@@ -6,11 +6,11 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func getHREFS() {
+func Launch(url string) {
 	// Instantiate default collector
 	c := colly.NewCollector(
 		// Visit only domains: hackerspaces.org, wiki.hackerspaces.org
-		colly.AllowedDomains("www.crashell.com"),
+		colly.AllowedDomains(url),
 	)
 
 	// On every a element which has href attribute call callback
@@ -29,5 +29,27 @@ func getHREFS() {
 	})
 
 	// Start scraping on https://hackerspaces.org
-	c.Visit("https://www.crashell.com/")
+	c.Visit("https://" + url + "/")
+}
+
+func GetLogstash() {
+	// Instantiate default collector
+	c := colly.NewCollector(
+		// Visit only domains: h"ackerspaces.org, wiki.hackerspaces.org
+		colly.AllowedDomains("elastic.co/es/downloads/logstash"),
+	)
+
+	c.OnHTML("title", func(e *colly.HTMLElement) {
+		fmt.Println(e.Text)
+	})
+
+	c.OnResponse(func(r *colly.Response) {
+		fmt.Println(r.StatusCode)
+	})
+
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Println("Visiting", r.URL)
+	})
+
+	c.Visit("elastic.co/es/downloads/logstash")
 }
